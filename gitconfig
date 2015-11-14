@@ -1,0 +1,7 @@
+[user]
+	name = nicodel
+	email = nicolas@nicodel.com
+[push]
+	default = simple
+[color]
+	ui = auto
