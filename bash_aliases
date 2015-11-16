@@ -108,7 +108,7 @@ NewLine="\n"
 Jobs="\j"
 
 
-export PS1=$ICyan'\u'$Color_Off'$(git branch &>/dev/null;\
+export PS1=$ICyan$PathFull'$(git branch &>/dev/null;\
 if [ $? -eq 0 ]; then \
   echo " '$BIWhite'['$PathShort$Color_Off'::$(echo `git status` | grep "rien à valider" > /dev/null 2>&1; \
   if [ "$?" -eq "0" ]; then \
@@ -120,5 +120,5 @@ if [ $? -eq 0 ]; then \
   fi)'$BIWhite'] \$ '$Color_Off'"; \
 else \
   # @2 - Prompt when not in GIT repo
-  echo " '$White$PathFull$IWhite' \$ '$Color_Off'"; \
+  echo " '$IWhite'\$ '$Color_Off'"; \
 fi)'
