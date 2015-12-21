@@ -107,5 +107,5 @@ set undofile
 "function Maximize_Window()
 "  silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz
 " Start gVim with specific size
-set lines=45 columns=140
+" set lines=45 columns=140
 "endfunction
