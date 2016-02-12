@@ -85,12 +85,80 @@ let g:lightline = {
 set laststatus=2
 
 " Configure Syntastic
-"let g:syntastic_javascript_checkers = ['eslint','jshint', 'jscs']
-let g:syntastic_javascript_checkers = ['jshint']
-let g:syntastic_mode_map = {
-    \ 'mode': 'active',
-    \ 'active_filetypes': ['javascript']
-    \ }
+let g:syntastic_check_on_open=1
+let g:syntastic_enable_signs=1
+" let g:syntastic_javascript_checkers = ['eslint','jshint', 'jscs']
+" let g:syntastic_javascript_checkers = ['jshint']
+
+let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
+let g:syntastic_html_checkers=['tidy', 'validator', 'w3']
+let g:syntastic_vim_checkers=['vimlint']
+let g:syntastic_json_checkers=['jsonlint']
+let g:syntastic_yaml_checkers=['js-yaml']
+let g:syntastic_scss_checkers=['scss-lint']
+let g:syntastic_css_checkers=['csslint']
+let g:syntastic_handlebars_checkers=['handlebars']
+let g:syntastic_tpl_checkers=['handlebars']
+
+" let g:syntastic_mode_map = {
+    " \ 'mode': 'active',
+    " \ 'active_filetypes': ['javascript']
+    " \ }
+
+
+" get available js linters
+function! GetJslinters()
+    let l:linters = [ ['eslint', '.eslintrc'], ['jshint', '.jshintrc'] ]
+    let l:available = []
+    for l:linter in l:linters
+       if executable(l:linter[0])
+            call add(l:available, l:linter)
+       endif
+    endfor
+    return l:available
+endfunction
+
+" check if the path to see if a linter config is present
+function! Jslinter(path, linters)
+    let l:dir = fnamemodify(a:path, ':p:h')
+
+    if(l:dir == '/')
+        return ''
+    endif
+
+    for l:linter in a:linters
+        if filereadable(l:dir . '/' . l:linter[1])
+            return l:linter[0]
+        endif
+    endfor
+
+    return Jslinter(fnamemodify(l:dir, ':h'), a:linters)
+endfunction
+
+" set the jslinter into Syntastic
+function! SyntasticSetJsLinter()
+
+    let l:availableLinters = GetJslinters()
+
+    " look for linter config in the current folder
+    let l:jslinter = Jslinter(expand('%:p'), l:availableLinters)
+    if l:jslinter == ''
+        " otherwise look into the home dir
+        let l:jslinter = Jslinter($HOME, l:availableLinters)
+    endif
+
+    " configure the linter
+    if l:jslinter != ''
+        let g:syntastic_javascript_checkers=[l:jslinter]
+    endif
+endfunction
+
+call SyntasticSetJsLinter() 
+
+" [> Javascript libraries syntax <]
+
+let g:used_javascript_libs = 'jquery,underscore,requirejs,chai,handlebars'
+
 
 " Configure la police de caracteres
 set guifont=DejaVu\ Sans\ Mono\ 9
