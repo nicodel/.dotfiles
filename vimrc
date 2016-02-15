@@ -91,7 +91,7 @@ let g:syntastic_enable_signs=1
 " let g:syntastic_javascript_checkers = ['jshint']
 
 let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
-let g:syntastic_html_checkers=['tidy', 'validator', 'w3']
+" let g:syntastic_html_checkers=['tidy', 'validator', 'w3']
 let g:syntastic_vim_checkers=['vimlint']
 let g:syntastic_json_checkers=['jsonlint']
 let g:syntastic_yaml_checkers=['js-yaml']
