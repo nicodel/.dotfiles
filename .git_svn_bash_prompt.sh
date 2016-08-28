@@ -83,7 +83,7 @@ function set_git_branch {
     branch_pattern="^(# )?On branch ([^${IFS}]*)"
   if [[ ${git_status} =~ ${branch_pattern} ]]; then
     #branch=${BASH_REMATCH[1]}
-    branch='`git branch 2> /dev/null | grep -e ^* | sed -E  s/^\\\\\*\ \(.+\)$/\\\\\1\\ /`'
+    branch='`git branch 2> /dev/null | grep -e ^* | sed -E  s/^\\\\\*\ \(.+\)$/\\\\\1\\/`'
   fi
 
   # Set the final branch string.
