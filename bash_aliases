@@ -16,4 +16,4 @@ alias ....='cd ../../..'
 # getting 256 colors support in terminal
 export TERM="xterm-256color"
 
-export PATH=$PATH:/opt/android-studio/bin:/home/nicodel/Android/Sdk/platform-tools/:/home/nicodel/Android/Sdk/tools/
+export PATH=$PATH:/usr/bin/nodejs/
