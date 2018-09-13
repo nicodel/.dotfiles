@@ -56,7 +56,7 @@ filetype on
 filetype plugin on
 filetype indent on
 
-" Utilise la version sombre de Solarized
+"Themes 
 set background=dark
 set termguicolors
 colorscheme material-monokai
@@ -67,23 +67,8 @@ let indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
 
-let g:lightline = {
-      \ 'colorscheme': 'solarized',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component': {
-      \   'readonly': '%{&filetype=="help"?"":&readonly?"X":""}',
-      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
-      \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
-      \ },
-      \ 'component_visible_condition': {
-      \   'readonly': '(&filetype!="help"&& &readonly)',
-      \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
-      \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
-      \ }
-      \ }
+let g:airline#extensions#tabline#enabled = 1
+
 set laststatus=2
 
 " Configure Syntastic
@@ -91,9 +76,10 @@ let g:syntastic_check_on_open=1
 let g:syntastic_enable_signs=1
 " let g:syntastic_javascript_checkers = ['eslint','jshint', 'jscs']
 " let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_javascript_checkers = ['eslint']
 
 let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
-" let g:syntastic_html_checkers=['tidy', 'validator', 'w3']
+let g:syntastic_html_checkers=['tidy', 'validator', 'w3']
 let g:syntastic_vim_checkers=['vimlint']
 let g:syntastic_json_checkers=['jsonlint']
 let g:syntastic_yaml_checkers=['js-yaml']
