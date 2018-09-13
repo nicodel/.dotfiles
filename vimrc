@@ -57,8 +57,10 @@ filetype plugin on
 filetype indent on
 
 " Utilise la version sombre de Solarized
-"set background=dark
-colorscheme monokai
+set background=dark
+set termguicolors
+colorscheme material-monokai
+"colorscheme monokai_phoenix
 "colorscheme solarized
 
 let indent_guides_auto_colors = 0
