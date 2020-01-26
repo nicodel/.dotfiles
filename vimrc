@@ -56,16 +56,41 @@ filetype on
 filetype plugin on
 filetype indent on
 
+" Use 24-bit (true-color) mode in Vim/Neovim when outside tmux or screen.
+" If you're using tmux version 2.2 or later, you can remove the outermost $TMUX
+" check and use tmux's 24-bit color support
+" (http://sunaku.github.io/tmux-24bit-color.html#usage for more information.)
+if empty($TMUX) && empty($STY)
+  " See https://gist.github.com/XVilka/8346728.
+  if $COLORTERM =~# 'truecolor' || $COLORTERM =~# '24bit'
+    if has('termguicolors')
+      " See :help xterm-true-color
+      if $TERM =~# '^screen'
+        let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+        let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+      endif
+      set termguicolors
+    endif
+  endif
+endif
+
 "Themes 
-set background=dark
+set background=light
 set termguicolors
-colorscheme material-monokai
+"colorscheme open-color
+"colorscheme kuroi
+"colorscheme material-monokai
 "colorscheme monokai_phoenix
 "colorscheme solarized
+"colorscheme desert
+colorscheme lucius 
 
-let indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
+let g:indent_guides_enable_on_vim_startup = 1
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
 
 let g:airline#extensions#tabline#enabled = 1
 
@@ -77,6 +102,7 @@ let g:syntastic_enable_signs=1
 " let g:syntastic_javascript_checkers = ['eslint','jshint', 'jscs']
 " let g:syntastic_javascript_checkers = ['jshint']
 let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_vue_checkers = ['eslint']
 
 let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
 let g:syntastic_html_checkers=['tidy', 'validator', 'w3']
@@ -158,6 +184,12 @@ set backupdir=$VIMTMP
 set directory=$VIMTMP
 set undodir  =$VIMTMP
 set undofile
+
+" to fix syntax highlighting stops working randomly for vue files
+autocmd FileType vue syntax sync fromstart
+
+" prevents vim-vue from supporting every pre-processor language highlighting
+let g:vue_disable_pre_processors=1
 
 " Start gVim maximized
 "function Maximize_Window()
