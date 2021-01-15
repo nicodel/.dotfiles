@@ -17,15 +17,17 @@ set title		" Met a jour le titre de la fenetre ou du terminal
 set number		" Affiche le numero des lignes
 set ruler		" Affiche la position actuelle du curseur
 set wrap		" Affiche les lignes trop longues sur plusieurs lignes
+set linebreak  " Ne coupe pas les mots
+set showcmd
 set encoding=utf-8
 
 set scrolloff=3		" Affiche un minimum de 3 lignes autour du curseur
-			            " (pour le scroll)
+		            " (pour le scroll)
 
 " sane editing
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
 set autoindent
 set smartindent
 
@@ -60,21 +62,25 @@ filetype indent on
 " If you're using tmux version 2.2 or later, you can remove the outermost $TMUX
 " check and use tmux's 24-bit color support
 " (http://sunaku.github.io/tmux-24bit-color.html#usage for more information.)
-if empty($TMUX) && empty($STY)
+"if empty($TMUX) && empty($STY)
   " See https://gist.github.com/XVilka/8346728.
-  if $COLORTERM =~# 'truecolor' || $COLORTERM =~# '24bit'
-    if has('termguicolors')
-      " See :help xterm-true-color
-      if $TERM =~# '^screen'
-        let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-        let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-      endif
-      set termguicolors
-    endif
-  endif
-endif
+"  if $COLORTERM =~# 'truecolor' || $COLORTERM =~# '24bit'
+"    if has('termguicolors')
+"      " See :help xterm-true-color
+"      if $TERM =~# '^screen'
+"       let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+"       let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+"      endif
+"      set termguicolors
+"    endif
+"  endif
+"endif
 
 "Themes 
+let g:kalahari_palette = {
+\ 'bg_1'       : [   0,   0,    236, 255 ],
+\ 'Comment'    : [   7,   7,    250, 242 ],
+\}
 set background=light
 set termguicolors
 "colorscheme open-color
@@ -83,7 +89,10 @@ set termguicolors
 "colorscheme monokai_phoenix
 "colorscheme solarized
 "colorscheme desert
-colorscheme lucius 
+"colorscheme lucius 
+"colorscheme kalahari
+colorscheme nord
+let g:nord_cursor_line_number_background = 0
 
 let g:indent_guides_enable_on_vim_startup = 1
 
@@ -95,6 +104,7 @@ set statusline+=%*
 let g:airline#extensions#tabline#enabled = 1
 
 set laststatus=2
+set cursorline
 
 " Configure Syntastic
 let g:syntastic_check_on_open=1
@@ -104,12 +114,13 @@ let g:syntastic_enable_signs=1
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_vue_checkers = ['eslint']
 
-let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
+" let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
 let g:syntastic_html_checkers=['tidy', 'validator', 'w3']
 let g:syntastic_vim_checkers=['vimlint']
 let g:syntastic_json_checkers=['jsonlint']
-let g:syntastic_yaml_checkers=['js-yaml']
-let g:syntastic_scss_checkers=['scss-lint']
+let g:syntastic_yaml_checkers = ['yamllint']
+" let g:syntastic_yaml_checkers=['js-yaml']
+" let g:syntastic_scss_checkers=['scss-lint']
 let g:syntastic_css_checkers=['csslint']
 let g:syntastic_handlebars_checkers=['handlebars']
 let g:syntastic_tpl_checkers=['handlebars']
